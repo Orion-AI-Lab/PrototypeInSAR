@@ -9,7 +9,7 @@ You can download the pretrained models [here](https://www.dropbox.com/sh/bnb5ud6
   - [Convit-PL](https://www.dropbox.com/s/o4nr7q1ue1l7vpz/convit.pt?dl=0)
   - [DeiT-PL](https://www.dropbox.com/s/h5w7izmrg670r7y/deit.pt?dl=0)
   - [Swin-PL](https://www.dropbox.com/s/btrufmzl8g29yo9/swin.pt?dl=0)
-  - [Swin-PL-Pseudo]()
+  - [Swin-PL-Pseudo](https://www.dropbox.com/s/3p3da2kyzrbo7xn/SwinPLPseudo.pt?dl=0)
 
 
 If you use this repo please consider citing our paper 

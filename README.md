@@ -2,6 +2,7 @@
 
 Work in Progress.
 
+### Trained models
 
 You can download the pretrained models [here](https://www.dropbox.com/sh/bnb5ud6gi2bvkcj/AAC5hY4bQG-Nigo_FNzPh3gDa?dl=0).
 
@@ -12,7 +13,14 @@ You can download the pretrained models [here](https://www.dropbox.com/sh/bnb5ud6
   - [Swin-PL-Pseudo](https://www.dropbox.com/s/3p3da2kyzrbo7xn/SwinPLPseudo.pt?dl=0)
 
 
-If you use this repo please consider citing our paper 
+Model usage example:
+```
+torch.load('swin.pt')
+```
+
+
+### Citation 
+If you use the code or models in this repo cite our paper:
 
 ```
 @article{bountos2022learning,

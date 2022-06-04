@@ -19,15 +19,13 @@ from Models import *
 import Models
 import Dataset
 import matplotlib.pyplot as plt
-import wandb
 import os
 import cv2 as cv
 import kornia
 import shutil
 
 
-def train_model(cnn, optimizer_s, lrate, num_epochs, reg, train_loader, test_loader, dataset_train_len, l1=1, args=None,
-                real_loader=None):
+def train_model(cnn, optimizer_s, lrate, num_epochs, reg, train_loader, test_loader, dataset_train_len, l1=1, args=None):
     # Set random seed for reproducibility
     manualSeed = 999
     # manualSeed = random.randint(1, 10000) # use if you want new results
@@ -38,8 +36,7 @@ def train_model(cnn, optimizer_s, lrate, num_epochs, reg, train_loader, test_loa
     criterion = nn.CrossEntropyLoss()
     device = 'cuda:0'
     cnn.cuda(device)
-    wandb.init(project='ViTs', entity='deepcube', config=args)
-    wandb.watch(cnn)
+
     epochs = []
     train_acc = []
     test_acc = []
@@ -48,7 +45,6 @@ def train_model(cnn, optimizer_s, lrate, num_epochs, reg, train_loader, test_loa
     train_error = []
     test_error = []
     best_acc = 0.0
-    tmp_loader = real_loader
     total = num_epochs * len(train_loader.dataset) / args.batch_size
     best_val = 0.0
     best_test = 0.0
@@ -149,7 +145,7 @@ def train_model(cnn, optimizer_s, lrate, num_epochs, reg, train_loader, test_loa
                     true_negatives += (predicted_test[label == 0] == 0).sum().item()
             test_acc.append(test_epoch_acc)
             test_loss.append(1.0 * test_running_loss / test_batch_ctr)
-            if idx == 1:
+            if idx == 0:
                 current_test_acc = test_epoch_acc
                 current_stats = {
                     'FP': false_positives,
@@ -158,9 +154,10 @@ def train_model(cnn, optimizer_s, lrate, num_epochs, reg, train_loader, test_loa
                     'TN': true_negatives,
                     'Epoch': epoch + 1
                 }
-            if idx == 3:
+            if idx == 1:
                 val_loss_list.append(test_epoch_acc)
                 plt.plot(range(len(val_loss_list)),val_loss_list)
+                plt.title('Validation Loss')
                 plt.show()
                 if test_epoch_acc > best_val:
                     best_val = test_epoch_acc
@@ -181,17 +178,16 @@ def train_model(cnn, optimizer_s, lrate, num_epochs, reg, train_loader, test_loa
             print('Test Running corrects : ', test_running_corrects)
 
             print('*' * 70)
+
             if idx == 0:
-                tmp_set = 'S1 Classification '
-            elif idx == 1:
                 tmp_set = 'C1 Classification '
-            elif idx == 2:
+            elif idx == 1:
                 tmp_set = 'Synth Test Classification'
             else:
                 tmp_set = 'Validation Test Classification'
-            wandb.log(
-                {tmp_set + 'ACC': test_epoch_acc, tmp_set + 'FP': false_positives, tmp_set + 'FN': false_negatives,
-                 tmp_set + 'TP': true_positives, tmp_set + 'TN': true_negatives}, step=epoch)
+
+            print('Task: ',tmp_set)
+            print('='*20)
             print('False Positives : ', false_positives)
             print('True Positives: ', true_positives)
             print('False Negatives : ', false_negatives)

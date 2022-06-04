@@ -15,17 +15,24 @@ import numpy as np
 
 
 class NetXd(nn.Module):
-    def __init__(self, num_hidden_units=2, num_classes=10,s=2):
+    def __init__(self, num_hidden_units=2, num_classes=10,s=2,encoder='swin'):
         super(NetXd, self).__init__()
         self.scale=s
-        self.encoder =timm.create_model('swin_base_patch4_window7_224',pretrained=True)
-        print(self.encoder)
+        if encoder=='swin':
+            arch = 'swin_base_patch4_window7_224'
+        elif encoder=='deit':
+            arch = 'deit_base_patch16_224'
+        elif encoder =='convit':
+            arch = 'convit_base'
+        self.encoder =timm.create_model(arch,pretrained=True)
+        fc_dim = self.encoder.head.in_features
         self.encoder.head = nn.Identity()
 
-        self.fc = nn.Linear(1024,num_hidden_units)
+        self.fc = nn.Linear(fc_dim,num_hidden_units)
+
         self.dce= dce_loss(num_classes,num_hidden_units)
 
-    def forward(self, x,domain=False):
+    def forward(self, x):
 
         x = self.encoder(x)
         x1 = self.fc(x)
@@ -62,8 +69,7 @@ class dce_loss(torch.nn.Module):
         return self.centers, -dist
 
 def regularization(features, centers, labels):
-        #print('features : ' , features.shape)
-        #print('centers : ',torch.t(centers)[labels].shape)
+
         distance=(features-torch.t(centers)[labels])
 
         distance=torch.sum(torch.pow(distance,2),1, keepdim=True)

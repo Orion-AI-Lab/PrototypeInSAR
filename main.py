@@ -30,9 +30,9 @@ if __name__ == '__main__':
     parser.add_argument('--stepLR', type=bool, default=False)
     parser.add_argument('--adapt_weight', type=int, default=1)
     parser.add_argument('--cosine', type=bool, default=False)
-    parser.add_argument('--synthetic_train_dataset', type=str,default='/home/nbountos/jh-shared/nbountos-ssh/InSarDA/synth')
-    parser.add_argument('--synthetic_val_dataset', type=str,default='/home/nbountos/jh-shared/nbountos-ssh/RemakeSynth/SyInterferoPy/validation_synthetic')
-    parser.add_argument('--test_dataset', type=str,default='/home/nbountos/jh-shared/nbountos-ssh/InSarDA/C1')
+    parser.add_argument('--synthetic_train_dataset', type=str,default='')
+    parser.add_argument('--synthetic_val_dataset', type=str,default='')
+    parser.add_argument('--test_dataset', type=str,default='')
     parser.add_argument('--encoder', type=str,default='swin')
 
 
@@ -42,8 +42,13 @@ if __name__ == '__main__':
 
     data_dir = args.synthetic_train_dataset
     test_dir = args.test_dataset
-
     val_dir = args.synthetic_val_dataset
+
+    if data_dir=='' or test_dir=='' or val_dir=='':
+        print('Give proper data paths')
+        exit(2)
+
+
     train_dataset = Dataset.Dataset(data_dir, setting='train', sim=False,original=False)
     full_dat = train_dataset
 

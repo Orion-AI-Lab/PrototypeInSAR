@@ -18,6 +18,14 @@ Model usage example:
 torch.load('swin.pt')
 ```
 
+### Test Set
+The test set C1, as published by [1], can be found [here](https://www.dropbox.com/s/r1duzboualngo08/C1.zip?dl=0).
+
+
+
+### References 
+[1] Bountos, Nikolaos Ioannis, et al. "Self-supervised contrastive learning for volcanic unrest detection." IEEE Geoscience and Remote Sensing Letters 19 (2021): 1-5.
+
 
 ### Citation 
 If you use the code or models in this repo cite our paper:

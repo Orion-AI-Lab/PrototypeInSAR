@@ -155,10 +155,7 @@ def train_model(cnn, optimizer_s, lrate, num_epochs, reg, train_loader, test_loa
                     'Epoch': epoch + 1
                 }
             if idx == 1:
-                val_loss_list.append(test_epoch_acc)
-                plt.plot(range(len(val_loss_list)),val_loss_list)
-                plt.title('Validation Loss')
-                plt.show()
+
                 if test_epoch_acc > best_val:
                     best_val = test_epoch_acc
                     best_test_acc = current_test_acc

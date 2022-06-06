@@ -69,7 +69,7 @@ The test set C1, as published by [1], can be found [here](https://www.dropbox.co
 
 ##### Unlabeled dataset
 
-The unlabeled dataset used for domain adaptation can be found [here](https://www.dropbox.com/s/gqiw09n21gcbksu/unlabeled.zip?dl=0)
+The unlabeled dataset used for domain adaptation can be found [here](https://www.dropbox.com/s/gqiw09n21gcbksu/unlabeled.zip?dl=0).
 
 
 

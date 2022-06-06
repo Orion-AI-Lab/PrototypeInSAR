@@ -15,7 +15,9 @@ def save_image(label, image, idx, target_set):
 
     path = target_set + str(label.cpu().item()) + '/' + str(idx) + '.png'
     status = cv.imwrite(path, image)
-    print(idx, ' Status : ', status)
+    if status==False:
+        print('Sample:', idx, ' Writing failed \n Exiting')
+        exit(2)
 
 
 def generate_pseudo(models=None, original_set='unlabeled/',

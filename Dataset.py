@@ -83,3 +83,54 @@ class Dataset(torch.utils.data.Dataset):
         if self.original:
             return (image, image, original), int(image_label), image_file
         return (image, original), int(image_label)
+
+
+
+
+
+class Unlabeled(torch.utils.data.Dataset):
+    def __init__(self, dataset='../Data/Dataset', setting='train', original=False):
+        self.path = dataset
+        self.images = os.listdir(self.path)
+        self.interferograms = []
+        self.original = original
+        for image in self.images:
+            image_dict = {'path': self.path + '/' + image}
+            self.interferograms.append(image_dict)
+
+        self.num_examples = len(self.interferograms)
+        self.set = setting
+
+
+    def __len__(self):
+        return self.num_examples
+
+
+    def __getitem__(self, index):
+
+        image_data = self.interferograms[index]
+
+        image_file = image_data['path']
+        image = cv.imread(image_file)
+        zero = np.zeros_like(image)
+        if image is None:
+            print(image_file)
+        gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+        original = image
+        original = original[:224, :224, :]
+        zero[:, :, 0] = gray
+        zero[:, :, 1] = gray
+        zero[:, :, 2] = gray
+        image = zero
+        image = image[:224, :224, :]
+
+        image = torch.from_numpy(image).float().permute(2, 0, 1)
+        original = torch.from_numpy(original).float().permute(2, 0, 1)
+
+        image = torchvision.transforms.Normalize((108.6684,108.6684, 108.6684), (109.1284, 109.1284, 109.1284))(image)
+
+        if image.shape[1] < 224 or image.shape[2] < 224:
+            print(image_file)
+        if self.original:
+            return (image, image, original), 0, image_file
+        return (image, original), 0

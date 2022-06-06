@@ -15,6 +15,12 @@ If you use the code or models in this repo cite our paper:
 
 You can download the pretrained models [here](https://www.dropbox.com/sh/bnb5ud6gi2bvkcj/AAC5hY4bQG-Nigo_FNzPh3gDa?dl=0).
 
+Directory structure:
+  - Model zoo root
+      - architecture
+          - architecture checkpoint
+     
+ 
 - The available models are:
   - [Convit-PL](https://www.dropbox.com/s/o4nr7q1ue1l7vpz/convit.pt?dl=0)
   - [DeiT-PL](https://www.dropbox.com/s/h5w7izmrg670r7y/deit.pt?dl=0)
@@ -43,6 +49,13 @@ Example:
 ```
 python pseudo_training_utils.py --unlabeled_path=PATH_OF_UNLABELED_DATASET  --target_path=PATH_TO_STORE_PSEUDOLABELED_SAMPLES --model_root_path=PATH_OF_DOWNLOADED_MODELS --arch=ARCHITECTURE(E.G swin, deit, convit) --test_path=REAL_TEST_PATH --synthetic_validation_path=SYNTHETIC_VAL_PATH
 ```
+
+Make sure the target path exists and has the following structure:
+
+- Pseudo_Directory (Name is irrelevant)
+  - 0
+  - 1
+  
 
 #### Datasets
 

@@ -21,8 +21,8 @@ def save_image(label, image, idx, target_set):
 def generate_pseudo(models=None, original_set='unlabeled/',
                     target_set='pseudo/', append=False,arch='swin',model_root_path='models/'):
     print('='*20)
-    print('Generating pseudo labels')
-    print('='*20)
+    print('Generating pseudo labels using: ',arch,' model')
+
     if arch == 'swin':
         arch_path = 'swin/swin.pt'
     elif arch == 'deit':
@@ -30,10 +30,13 @@ def generate_pseudo(models=None, original_set='unlabeled/',
     elif arch == 'convit':
         arch_path = 'convit/convit.pt'
 
+
     if models is None:
         model_path = model_root_path + arch_path
+        print('Checkpoint path: ', model_path)
         models = torch.load(model_path, map_location='cuda:0')
-        print(models)
+
+    print('=' * 20)
     models.eval()
     pseudo_dir = target_set
     files = glob.glob(pseudo_dir + '/1/*')
@@ -96,7 +99,6 @@ def pseudo_train(arch='swin',pseudo_train_dir = '', test_dir = '', model_root_pa
     for param in model.encoder.parameters():
         param.requires_grad = False
     a = [8096, 16000]
-    # nn.Sequential(nn.Linear(1024, 8096), nn.ReLU(), nn.Linear(8096, 16000),nn.ReLU(),nn.Linear(16000,3)) top
 
     w = 1
     model.fc = nn.Sequential(nn.Linear(model.fc.in_features, a[0] * w), nn.ReLU(), nn.Linear(a[0] * w, a[1] * w), nn.ReLU(),

@@ -3,12 +3,15 @@
 If you use the code or models in this repo cite our paper:
 
 ```
-@article{bountos2022learning,
-  title={Learning class prototypes from Synthetic InSAR with Vision Transformers},
+@ARTICLE{9791383,
   author={Bountos, Nikolaos Ioannis and Michail, Dimitrios and Papoutsis, Ioannis},
-  journal={arXiv preprint arXiv:2201.03016},
-  year={2022}
-}
+  journal={IEEE Transactions on Geoscience and Remote Sensing}, 
+  title={Learning from Synthetic InSAR with Vision Transformers: The case of volcanic unrest detection}, 
+  year={2022},
+  volume={},
+  number={},
+  pages={1-1},
+  doi={10.1109/TGRS.2022.3180891}}
 ```
 
 #### Trained models
